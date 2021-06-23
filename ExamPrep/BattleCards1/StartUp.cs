@@ -1,14 +1,8 @@
 ﻿using System.Threading.Tasks;
-using CarShop.Data;
-using CarShop.Services;
-using Microsoft.EntityFrameworkCore;
-using MyWebServer;
-using MyWebServer.Controllers;
-using MyWebServer.Results.Views;
 
-namespace CarShop
+namespace BattleCards
 {
-    public class Startup
+    class StartUp
     {
         public static async Task Main()
             => await HttpServer
@@ -18,10 +12,9 @@ namespace CarShop
                 .WithServices(services => services
                     .Add<IViewEngine, CompilationViewEngine>()
                     .Add<IValidator, Validator>()
-                    .Add<IPasswordHasher, PasswordHasher>()
-                    .Add<IUserService, UserService>()
-                    .Add<CarShopDbContext>())
-                .WithConfiguration<CarShopDbContext>(context => context
+                    .Add<IPasswordHasher, PaswordHasher>()
+                    .Add<ApplicationDbContext>())
+                .WithConfiguration<ApplicationDbContext>(context => context
                     .Database.Migrate())
                 .Start();
     }

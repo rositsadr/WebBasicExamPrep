@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Git", "Git\Git.csproj", "{B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarShop", "CarShop\CarShop.csproj", "{84371E83-DB39-4942-B2A8-ACF66FA45A39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleCards", "BattleCards\BattleCards.csproj", "{804A018C-BB2D-45BC-A956-961C06EBFAD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{84371E83-DB39-4942-B2A8-ACF66FA45A39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84371E83-DB39-4942-B2A8-ACF66FA45A39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84371E83-DB39-4942-B2A8-ACF66FA45A39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{804A018C-BB2D-45BC-A956-961C06EBFAD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{804A018C-BB2D-45BC-A956-961C06EBFAD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{804A018C-BB2D-45BC-A956-961C06EBFAD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{804A018C-BB2D-45BC-A956-961C06EBFAD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
