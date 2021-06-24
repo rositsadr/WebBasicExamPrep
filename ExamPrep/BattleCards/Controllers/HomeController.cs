@@ -1,7 +1,8 @@
-﻿namespace BattleCards.Controllers
+﻿using MyWebServer.Controllers;
+using MyWebServer.Http;
+
+namespace BattleCards.Controllers
 {
-    using SIS.HTTP;
-    using SIS.MvcFramework;
 
     public class HomeController : Controller
     { 

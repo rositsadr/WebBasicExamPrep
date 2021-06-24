@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BattleCards
 {
-    class Program
+    class StartUp
     {
         public static async Task Main()
             => await HttpServer
