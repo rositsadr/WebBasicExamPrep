@@ -38,7 +38,8 @@ namespace BattleCards.Controllers
 
             if (string.IsNullOrEmpty(userId))
             {
-                return Error("Username or Password not correct.");
+                //return Error("Username or Password not correct.");
+                return Redirect("/Users/Login");
             }
 
             this.SignIn(userId);
@@ -68,7 +69,8 @@ namespace BattleCards.Controllers
 
             if (errors.Count > 0)
             {
-                return Error(errors);
+                //return Error(errors);
+                return Redirect("/Users/Register");
             }
 
             var newUser = new User

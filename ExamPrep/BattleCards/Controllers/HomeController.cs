@@ -8,7 +8,12 @@ namespace BattleCards.Controllers
     { 
         public HttpResponse Index()
         {
-            return this.View();
+            if(string.IsNullOrEmpty(User.Id))
+            {
+                return this.View();
+            }
+
+            return Redirect("/Cards/All");
         }
     }
 }
