@@ -10,6 +10,8 @@
 
         public int Year { get; init; }
 
+        public bool IsMechanic { get; init; }
+
         public IEnumerable<IssueListingViewModel> Issues { get; init; }
     }
 }

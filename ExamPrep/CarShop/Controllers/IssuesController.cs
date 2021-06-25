@@ -13,25 +13,21 @@
     {
         private readonly IUserService userService;
         private readonly CarShopDbContext data;
+        private readonly IValidator validator;
 
-        public IssuesController(IUserService userService, CarShopDbContext data)
+        public IssuesController(IUserService userService, CarShopDbContext data, IValidator validator)
         {
             this.userService = userService;
             this.data = data;
+            this.validator = validator;
         }
 
         [Authorize]
         public HttpResponse CarIssues(string carId)
         {
-            if (!this.userService.IsMechanic(this.User.Id))
+            if (!this.userService.IsMechanic(this.User.Id) && !this.userService.OwnsCar(this.User.Id,carId))
             {
-                var userOwnsCar = this.data.Cars
-                    .Any(c => c.Id == carId && c.OwnerId == this.User.Id);
-
-                if (!userOwnsCar)
-                {
-                    return Error("You do not have access to this car.");
-                }
+                return Unauthorized();
             }
 
             var carWithIssues = this.data
@@ -42,6 +38,7 @@
                     Id = c.Id,
                     Model = c.Model,
                     Year = c.Year,
+                    IsMechanic = this.userService.IsMechanic(this.User.Id),
                     Issues = c.Issues.Select(i => new IssueListingViewModel
                     {
                         Id = i.Id,
@@ -74,16 +71,22 @@
         [HttpPost]
         public HttpResponse Add(AddingIssueModel model)
         {
-            if (model.Description.Length<IssueDescriptionMinLength)
+            if (!this.userService.IsMechanic(this.User.Id) && !this.userService.OwnsCar(this.User.Id, model.CarId))
             {
-                return Error($"Description should be longer then {IssueDescriptionMinLength} symbols.");
+                return Unauthorized();
+            }
+
+            var errors = validator.ValidateIssue(model);
+
+            if (errors.Any())
+            {
+                return Error(errors);
             }
 
             var issue = new Issue
             {
                 CarId = model.CarId,
                 Description = model.Description,
-                IsFixed = false,
             };
 
             data.Issues.Add(issue);
@@ -106,9 +109,7 @@
                 return BadRequest();
             }
 
-            var issue = data.Issues
-                .Where(i => i.Id == issueId && i.CarId == carId)
-                .FirstOrDefault();
+            var issue = data.Issues.Find(issueId);
 
             if (issue == null)
             {
@@ -132,6 +133,11 @@
             if(!carExists)
             {
                 return BadRequest();
+            }
+
+            if (!this.userService.IsMechanic(this.User.Id) && !this.userService.OwnsCar(this.User.Id, carId))
+            {
+                return Unauthorized();
             }
 
             var issue = data.Issues

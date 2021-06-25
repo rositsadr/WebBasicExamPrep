@@ -8,7 +8,7 @@ namespace BattleCards.Controllers
     { 
         public HttpResponse Index()
         {
-            if(string.IsNullOrEmpty(User.Id))
+            if(!User.IsAuthenticated)
             {
                 return this.View();
             }

@@ -13,5 +13,11 @@
             => this.data
                 .Users
                 .Any(u => u.Id == userId && u.IsMechanic);
+
+        public bool OwnsCar(string userId, string carId)
+        {
+            return this.data.Cars
+                .Any(c => c.Id == carId && c.OwnerId == userId);
+        }
     }
 }
