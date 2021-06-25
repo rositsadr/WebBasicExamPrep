@@ -86,6 +86,7 @@ namespace BattleCards.Controllers
             return Redirect("/Users/Login");
         }
 
+        [Authorize]
         public HttpResponse Logout()
         {
             this.SignOut();
