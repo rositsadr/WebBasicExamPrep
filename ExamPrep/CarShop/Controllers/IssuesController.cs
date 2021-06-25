@@ -96,7 +96,7 @@
         {
             if (!this.userService.IsMechanic(this.User.Id))
             {
-                return Error("Only mechanics can fix issues.");
+                return Unauthorized();
             }
 
             var carExists = data.Cars.Any(c => c.Id == carId);
@@ -115,9 +115,12 @@
                 return Error("There is no such issue for this car");
             }
 
-            issue.IsFixed = true;
+            if(issue.IsFixed == false)
+            {
+                issue.IsFixed = true;
 
-            data.SaveChanges();
+                data.SaveChanges();
+            }
 
             return Redirect($"/Issues/CarIssues?carId={carId}");
         }
