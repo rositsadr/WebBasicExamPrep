@@ -76,7 +76,7 @@
         {
             if (model.Description.Length<IssueDescriptionMinLength)
             {
-                return Error($"Descroption should be longer then {IssueDescriptionMinLength} symbols.");
+                return Error($"Description should be longer then {IssueDescriptionMinLength} symbols.");
             }
 
             var issue = new Issue
@@ -99,9 +99,21 @@
                 return Error("Only mechanics can fix issues.");
             }
 
+            var carExists = data.Cars.Any(c => c.Id == carId);
+
+            if (!carExists)
+            {
+                return BadRequest();
+            }
+
             var issue = data.Issues
-                .Where(i => i.Id == issueId)
+                .Where(i => i.Id == issueId && i.CarId == carId)
                 .FirstOrDefault();
+
+            if (issue == null)
+            {
+                return Error("There is no such issue for this car");
+            }
 
             issue.IsFixed = true;
 
@@ -112,9 +124,21 @@
 
         public HttpResponse Delete(string issueId, string carId)
         {
+            var carExists = data.Cars.Any(c => c.Id == carId);
+
+            if(!carExists)
+            {
+                return BadRequest();
+            }
+
             var issue = data.Issues
-                .Where(i => i.Id == issueId)
+                .Where(i => i.Id == issueId && i.CarId == carId)
                 .FirstOrDefault();
+
+            if(issue==null)
+            {
+                return Error($"There is no such issue for this car.");
+            }
 
             data.Issues.Remove(issue);
             data.SaveChanges();
